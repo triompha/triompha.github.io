@@ -1,0 +1,11 @@
+
+http://triompha.github.io/archive.html
+http://triompha.github.io/atom.xml
+http://triompha.github.io/categories.html
+http://triompha.github.io/index.html
+http://triompha.github.io/pages.html
+http://triompha.github.io/rss.xml
+http://triompha.github.io/sitemap.txt
+http://triompha.github.io/tags.html
+
+http://triompha.github.io/2014/08/19/
