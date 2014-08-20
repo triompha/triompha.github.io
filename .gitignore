@@ -20,7 +20,8 @@ local.properties
 .externalToolBuilders/
 
 _site/
-_site/*
+._site/
+._site/*
 # Locally stored "Eclipse launch configurations"
 *.launch
 
