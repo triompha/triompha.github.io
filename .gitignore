@@ -19,6 +19,8 @@ local.properties
 # External tool builders
 .externalToolBuilders/
 
+_site/
+_site/*
 # Locally stored "Eclipse launch configurations"
 *.launch
 
@@ -62,4 +64,3 @@ D:/
 *.log
 *.log.*
 tree
-_site/
