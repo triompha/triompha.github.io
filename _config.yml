@@ -1,5 +1,5 @@
 permalink: /:year/:month/:day/:title.html
-markdown: kramdown
+markdown: kramdown 
 pygments: true
 filter: 'category'
 
@@ -31,5 +31,5 @@ avatar: https://avatars3.githubusercontent.com/u/1892355?v=3&s=460
 #  url: yansu.org
 
 # disqus 设置
-disqus:
-  shortname: triompha
+#disqus:
+#  shortname: triompha
