@@ -283,3 +283,8 @@ ATYP    头占用字节  原因
 
 我怀疑RFC 1928这里有笔误，写信询问mleech@bnr.ca、ietf-web@ietf.org去了。
 
+
+
+<img src="http://blog.triompha.com/public/upload/socket5_data_trans.jpg" alt="测试图1" width="100%">
+<img src="http://blog.triompha.com/public/upload/socket5_sequence.jpg" alt="测试图1" width="100%">
+<img src="http://blog.triompha.com/public/upload/socket5_udp.jpg" alt="测试图1" width="100%">
