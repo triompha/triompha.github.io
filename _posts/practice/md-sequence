@@ -1,0 +1,27 @@
+#### 画顺序图也挺有意思的
+
+yes往下 ，no往右
+
+```flow
+start=>start: A->B(A follow B)
+query=>operation: query数据库（A-B）
+add=>operation: 添加A-B(0),B-A(1)
+cond=>condition: 存在
+cond1=>condition: status!=-1
+cond2=>condition: status=0||status=2
+change1=>operation: 修改A->B(1),B-A(1)
+change2=>operation: 修改A->B(0),B-A(1)
+end=>end
+
+start->query->cond
+cond(yes)->cond1
+cond(no)->add
+cond1(no)->change2
+cond1(yes)->cond2
+cond2(yes)->end
+cond2(no)->change1
+change2->end
+change1->end
+add->end
+
+```
