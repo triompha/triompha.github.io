@@ -4617,24 +4617,24 @@ dependencies {
        </div>
       </div>
      </div>
-     <p>Spring Boot allows you to externalize your configuration so you can work with the same application code in different environments. You can use properties files, YAML files, environment variables and command-line arguments to externalize configuration. Property values can be injected directly into your beans using the <code class="literal">@Value</code> annotation, accessed via Spring’s <code class="literal">Environment</code> abstraction or <a class="link" href="#boot-features-external-config-typesafe-configuration-properties" title="24.7&nbsp;Typesafe Configuration Properties">bound to structured objects</a> via <code class="literal">@ConfigurationProperties</code>.</p>
-     <p>Spring Boot uses a very particular <code class="literal">PropertySource</code> order that is designed to allow sensible overriding of values, properties are considered in the following order:</p>
+     <p>Spring Boot允许你扩展配置，以便于在不同的环境中部署相同的应用代码. 你可以使用properties 文件, YAML 文件,环境变量和命令行参数来扩展配置. 属性值可以通过在你的bean中加入 <code class="literal">@Value</code> 获得,通过Spring的 <code class="literal">Environment</code>的抽象实现 或者通过 <code class="literal">@ConfigurationProperties</code>配置绑定到<a class="link" href="#boot-features-external-config-typesafe-configuration-properties" title="24.7&nbsp;Typesafe Configuration Properties"> 结构化数据</a> .</p>
+     <p>Spring Boot 使用了非常流行的<code class="literal">PropertySource</code>顺序,这样就允许属性值覆盖，属性会以以下顺序逐级覆盖:</p>
      <div class="orderedlist">
       <ol class="orderedlist" type="1">
-       <li class="listitem">Command line arguments.</li>
-       <li class="listitem">JNDI attributes from <code class="literal">java:comp/env</code>.</li>
-       <li class="listitem">Java System properties (<code class="literal">System.getProperties()</code>).</li>
-       <li class="listitem">OS environment variables.</li>
-       <li class="listitem">A <code class="literal">RandomValuePropertySource</code> that only has properties in <code class="literal">random.*</code>.</li>
-       <li class="listitem"><a class="link" href="#boot-features-external-config-profile-specific-properties" title="24.4&nbsp;Profile-specific properties">Profile-specific application properties</a> outside of your packaged jar (<code class="literal">application-{profile}.properties</code> and YAML variants)</li>
-       <li class="listitem"><a class="link" href="#boot-features-external-config-profile-specific-properties" title="24.4&nbsp;Profile-specific properties">Profile-specific application properties</a> packaged inside your jar (<code class="literal">application-{profile}.properties</code> and YAML variants)</li>
-       <li class="listitem">Application properties outside of your packaged jar (<code class="literal">application.properties</code> and YAML variants).</li>
-       <li class="listitem">Application properties packaged inside your jar (<code class="literal">application.properties</code> and YAML variants).</li>
-       <li class="listitem"><a class="link" href="http://docs.spring.io/spring/docs/4.2.1.RELEASE/javadoc-api/org/springframework/context/annotation/PropertySource.html" target="_top"><code class="literal">@PropertySource</code></a> annotations on your <code class="literal">@Configuration</code> classes.</li>
-       <li class="listitem">Default properties (specified using <code class="literal">SpringApplication.setDefaultProperties</code>).</li>
+       <li class="listitem">命令行参数.</li>
+       <li class="listitem">从<code class="literal">java:comp/env</code>获得的JNDI属性</li>
+       <li class="listitem">使用(<code class="literal">System.getProperties()</code>)设置的系统参数.</li>
+       <li class="listitem">操作系统环境变量.</li>
+       <li class="listitem"><code class="literal">RandomValuePropertySource</code> 能够产生所及数的属性<code class="literal">random.*</code>.</li>
+       <li class="listitem">jar包之外的<a class="link" href="#boot-features-external-config-profile-specific-properties" title="24.4&nbsp;Profile-specific properties">特别的应用配置文件</a> (<code class="literal">application-{profile}.properties</code> 和 YAML 配置)</li>
+       <li class="listitem">打包在jar包内的<a class="link" href="#boot-features-external-config-profile-specific-properties" title="24.4&nbsp;Profile-specific properties">特别的应用配置文件</a> (<code class="literal">application-{profile}.properties</code> 和 YAML variants)</li>
+       <li class="listitem">jar包之外的应用配置文件 (<code class="literal">application.properties</code> 和 YAML variants).</li>
+       <li class="listitem">jar包之内的应用配置文件 (<code class="literal">application.properties</code> 和 YAML variants).</li>
+       <li class="listitem">带有<a class="link" href="http://docs.spring.io/spring/docs/4.2.1.RELEASE/javadoc-api/org/springframework/context/annotation/PropertySource.html" target="_top"><code class="literal">@PropertySource</code></a>注解的<code class="literal">@Configuration</code> 类.</li>
+       <li class="listitem">默认属性(使用<code class="literal">SpringApplication.setDefaultProperties</code>配置的).</li>
       </ol>
      </div>
-     <p>To provide a concrete example, suppose you develop a <code class="literal">@Component</code> that uses a <code class="literal">name</code> property:</p>
+     <p>为了提供一个具体的案例, 假设你正开发一个含有<code class="literal">name</code>属性的 <code class="literal">@Component</code> </p>
      <pre class="programlisting"><span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">import</span> org.springframework.stereotype.*
 <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">import</span> org.springframework.beans.factory.annotation.*
 
@@ -4647,7 +4647,7 @@ dependencies {
     <span xmlns:d="http://docbook.org/ns/docbook" class="hl-comment">// ...</span>
 
 }</pre>
-     <p>You can bundle an <code class="literal">application.properties</code> inside your jar that provides a sensible default <code class="literal">name</code>. When running in production, an <code class="literal">application.properties</code> can be provided outside of your jar that overrides <code class="literal">name</code>; and for one-off testing, you can launch with a specific command line switch (e.g. <code class="literal">java -jar app.jar --name=&quot;Spring&quot;</code>).</p>
+     <p>你可以将 <code class="literal">application.properties</code>打包进你的jar包中以提供默认的配置<code class="literal">name</code>信息. 当在生产环境下运行时,一个 <code class="literal">application.properties</code>可以在jar包之外提供来覆盖<code class="literal">name</code>值; 当然为了测试，你也可以在命令行中替换 (e.g. <code class="literal">java -jar app.jar --name=&quot;Spring&quot;</code>).</p>
      <div class="section">
       <div class="titlepage">
        <div>
@@ -4656,7 +4656,7 @@ dependencies {
         </div>
        </div>
       </div>
-      <p>The <code class="literal">RandomValuePropertySource</code> is useful for injecting random values (e.g. into secrets or test cases). It can produce integers, longs or strings, e.g.</p>
+      <p><code class="literal">RandomValuePropertySource</code>用来注入随机数(比如. 密码或者测试例子). 他可以提供 integers, longs 或者 strings数据, e.g.</p>
       <pre class="programlisting"><span xmlns:d="http://docbook.org/ns/docbook" class="hl-attribute">my.secret</span>=${random.value}
 <span xmlns:d="http://docbook.org/ns/docbook" class="hl-attribute">my.number</span>=${random.int}
 <span xmlns:d="http://docbook.org/ns/docbook" class="hl-attribute">my.bignumber</span>=${random.long}
@@ -4672,8 +4672,8 @@ dependencies {
         </div>
        </div>
       </div>
-      <p>By default <code class="literal">SpringApplication</code> will convert any command line option arguments (starting with ‘--’, e.g. <code class="literal">--server.port=9000</code>) to a <code class="literal">property</code> and add it to the Spring <code class="literal">Environment</code>. As mentioned above, command line properties always take precedence over other property sources.</p>
-      <p>If you don’t want command line properties to be added to the <code class="literal">Environment</code> you can disable them using <code class="literal">SpringApplication.setAddCommandLineProperties(false)</code>.</p>
+      <p>默认情况下<code class="literal">SpringApplication</code>会转换所有命令行参数(starting with ‘--’, e.g. <code class="literal">--server.port=9000</code>) 到 <code class="literal">property</code>值  并且将它加入到Spring <code class="literal">Environment</code>. 如上面提到的, 命令行属性具有最高优先级.</p>
+      <p>如果你不想把命令行属性添加到<code class="literal">Environment</code>中，你可以使用<code class="literal">SpringApplication.setAddCommandLineProperties(false)</code>禁止它.</p>
      </div>
      <div class="section">
       <div class="titlepage">
@@ -4746,8 +4746,8 @@ dependencies {
         </div>
        </div>
       </div>
-      <p>In addition to <code class="literal">application.properties</code> files, profile-specific properties can also be defined using the naming convention <code class="literal">application-{profile}.properties</code>. The <code class="literal">Environment</code> has a set of default profiles (by default <code class="literal">[default]</code>) which are used if no active profiles are set (i.e. if no profiles are explicitly activated then properties from <code class="literal">application-default.properties</code> are loaded).</p>
-      <p>Profile specific properties are loaded from the same locations as standard <code class="literal">application.properties</code>, with profile-specific files always overriding the non-specific ones irrespective of whether the profile-specific files are inside or outside your packaged jar.</p>
+      <p>除了<code class="literal">application.properties</code> 文件,按照<code class="literal">application-{profile}.properties</code>命名格式的配置也可被使用.  <code class="literal">Environment</code>已经设置了一些默认值(默认为 <code class="literal">[default]</code>)  (如果没有特别的明确的配置文件出现<code class="literal">application-default.properties</code>的默认配置会被加载).</p>
+      <p>无论特别的配置文件(application-specific.properties,和application.properties同级目录)是否打包在jar包内都会覆盖标准的 <code class="literal">application.properties</code> .</p>
      </div>
      <div class="section">
       <div class="titlepage">
@@ -4757,7 +4757,8 @@ dependencies {
         </div>
        </div>
       </div>
-      <p>The values in <code class="literal">application.properties</code> are filtered through the existing <code class="literal">Environment</code> when they are used so you can refer back to previously defined values (e.g. from System properties).</p>
+      <p><code class="literal">application.properties</code>的属性值首先会被<code class="literal">Environment</code>过滤替代默认值,所以你可以在这里设置来替换程序中的设置(e.g. from System properties).</p>
+u can also use this technique to create ‘short’ variants of existing Spring Boot properties
       <pre class="programlisting"><span xmlns:d="http://docbook.org/ns/docbook" class="hl-attribute">app.name</span>=MyApp
 <span xmlns:d="http://docbook.org/ns/docbook" class="hl-attribute">app.description</span>=${app.name} is a Spring Boot application</pre>
       <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
@@ -4768,7 +4769,7 @@ dependencies {
           <th align="left">Tip</th>
          </tr>
          <tr>
-          <td align="left" valign="top"><p>You can also use this technique to create ‘short’ variants of existing Spring Boot properties. See the <span class="emphasis"><em><a class="xref" href="#howto-use-short-command-line-arguments" title="68.3&nbsp;Use ‘short’ command line arguments">Section&nbsp;68.3, “Use ‘short’ command line arguments”</a></em></span> how-to for details.</p></td>
+          <td align="left" valign="top"><p>你同样可以使用这个技术设置剪短的参数s. 参阅<span class="emphasis"><em><a class="xref" href="#howto-use-short-command-line-arguments" title="68.3&nbsp;Use ‘short’ command line arguments">Section&nbsp;68.3, “Use ‘short’ command line arguments”</a></em></span> 获取详细信息.<p></td>
          </tr>
         </tbody>
        </table>
@@ -5184,8 +5185,8 @@ dependencies {
        </div>
       </div>
      </div>
-     <p>Spring Boot uses <a class="link" href="http://commons.apache.org/logging" target="_top">Commons Logging</a> for all internal logging, but leaves the underlying log implementation open. Default configurations are provided for <a class="link" href="http://docs.oracle.com/javase/7/docs/api/java/util/logging/package-summary.html" target="_top">Java Util Logging</a>, <a class="link" href="http://logging.apache.org/log4j/" target="_top">Log4J</a>, <a class="link" href="http://logging.apache.org/log4j/2.x/" target="_top">Log4J2</a> and <a class="link" href="http://logback.qos.ch/" target="_top">Logback</a>. In each case loggers are pre-configured to use console output with optional file output also available.</p>
-     <p>By default, If you use the ‘Starter POMs’, Logback will be used for logging. Appropriate Logback routing is also included to ensure that dependent libraries that use Java Util Logging, Commons Logging, Log4J or SLF4J will all work correctly.</p>
+     <p>Spring Boot 使用<a class="link" href="http://commons.apache.org/logging" target="_top">Commons Logging</a>作为所有内部日志记录, 但为日志的具体实现留了口子. 已经提供了<a class="link" href="http://docs.oracle.com/javase/7/docs/api/java/util/logging/package-summary.html" target="_top">Java Util Logging</a>, <a class="link" href="http://logging.apache.org/log4j/" target="_top">Log4J</a>, <a class="link" href="http://logging.apache.org/log4j/2.x/" target="_top">Log4J2</a> and <a class="link" href="http://logback.qos.ch/" target="_top">Logback</a>的默认配置.每种日志系统都默认使用控制台输出，并可配置文件输出.</p>
+     <p>默认情况下,如果你使用了‘Starter POMs’, Logback会作为日志系统. 优秀的Logback路由同样被引入进来以确保其他依赖库使用其他日志系统如Java Util Logging, Commons Logging, Log4J or SLF4J同样正常工作.</p>
      <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
       <table border="0" summary="Tip">
        <tbody>
@@ -5194,7 +5195,7 @@ dependencies {
          <th align="left">Tip</th>
         </tr>
         <tr>
-         <td align="left" valign="top"><p>There are a lot of logging frameworks available for Java. Don’t worry if the above list seems confusing. Generally you won’t need to change your logging dependencies and the Spring Boot defaults will work just fine.</p></td>
+         <td align="left" valign="top"><p>在java界有很多日志框架. 如果你看完上面的已经头脑混乱了也不用着急. 整体上你不需要更改日志依赖，Spring Boot 的默认配置会工作的很好.</p></td>
         </tr>
        </tbody>
       </table>
@@ -5207,22 +5208,22 @@ dependencies {
         </div>
        </div>
       </div>
-      <p>The default log output from Spring Boot looks like this:</p>
+      <p>Spring Boot默认的日志输出会像下面这样:</p>
       <pre class="screen">2014-03-05 10:57:51.112  INFO 45469 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/7.0.52
 2014-03-05 10:57:51.253  INFO 45469 --- [ost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
 2014-03-05 10:57:51.253  INFO 45469 --- [ost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1358 ms
 2014-03-05 10:57:51.698  INFO 45469 --- [ost-startStop-1] o.s.b.c.e.ServletRegistrationBean        : Mapping servlet: 'dispatcherServlet' to [/]
 2014-03-05 10:57:51.702  INFO 45469 --- [ost-startStop-1] o.s.b.c.embedded.FilterRegistrationBean  : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]</pre>
-      <p>The following items are output:</p>
+      <p>以下项会输出:</p>
       <div class="itemizedlist">
        <ul class="itemizedlist" style="list-style-type: disc; ">
-        <li class="listitem">Date and Time — Millisecond precision and easily sortable.</li>
-        <li class="listitem">Log Level — <code class="literal">ERROR</code>, <code class="literal">WARN</code>, <code class="literal">INFO</code>, <code class="literal">DEBUG</code> or <code class="literal">TRACE</code>.</li>
-        <li class="listitem">Process ID.</li>
-        <li class="listitem">A <code class="literal">---</code> separator to distinguish the start of actual log messages.</li>
-        <li class="listitem">Thread name — Enclosed in square brackets (may be truncated for console output).</li>
-        <li class="listitem">Logger name — This is usually the source class name (often abbreviated).</li>
-        <li class="listitem">The log message.</li>
+        <li class="listitem">日期和时间— 毫秒数可方便排序.</li>
+        <li class="listitem">日志级别— <code class="literal">ERROR</code>, <code class="literal">WARN</code>, <code class="literal">INFO</code>, <code class="literal">DEBUG</code> or <code class="literal">TRACE</code>.</li>
+        <li class="listitem">进程 ID.</li>
+        <li class="listitem">分隔符<code class="literal">---</code> 用于隔离真正的日志信息.</li>
+        <li class="listitem">线程名称— 用中括号括起来.</li>
+        <li class="listitem">Logger名称 — 这项通常是源码的类名.</li>
+        <li class="listitem">日志信息.</li>
        </ul>
       </div>
       <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
@@ -5233,7 +5234,7 @@ dependencies {
           <th align="left">Note</th>
          </tr>
          <tr>
-          <td align="left" valign="top"><p>Logback does not have a <code class="literal">FATAL</code> level (it is mapped to <code class="literal">ERROR</code>)</p></td>
+          <td align="left" valign="top"><p>Logback没有<code class="literal">FATAL</code>级别日志(被映射为<code class="literal">ERROR</code>级别)</p></td>
          </tr>
         </tbody>
        </table>
@@ -5247,7 +5248,7 @@ dependencies {
         </div>
        </div>
       </div>
-      <p>The default log configuration will echo messages to the console as they are written. By default <code class="literal">ERROR</code>, <code class="literal">WARN</code> and <code class="literal">INFO</code> level messages are logged. To also log <code class="literal">DEBUG</code> level messages to the console you can start your application with a <code class="literal">--debug</code> flag.</p>
+      <p>默认的日志配置会在控制台输出信息. 默认<code class="literal">ERROR</code>, <code class="literal">WARN</code> and <code class="literal">INFO</code> 级别的日志会输出l. 如果你希望在控制台输出<code class="literal">DEBUG</code> 级别信息,启动应用的时候带上参数<code class="literal">--debug</code> 即可.</p>
       <pre class="screen">$ java -jar myapp.jar --debug</pre>
       <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
        <table border="0" summary="Note">
@@ -5257,12 +5258,12 @@ dependencies {
           <th align="left">Note</th>
          </tr>
          <tr>
-          <td align="left" valign="top"><p>you can also specify <code class="literal">debug=true</code> in your <code class="literal">application.properties</code>.</p></td>
+          <td align="left" valign="top"><p>你同样可以在 <code class="literal">application.properties</code>设置<code class="literal">debug=true</code>.</p></td>
          </tr>
         </tbody>
        </table>
       </div>
-      <p>If your terminal supports ANSI, color output will be used to aid readability. You can set <code class="literal">spring.output.ansi.enabled</code> to a <a class="link" href="http://docs.spring.io/spring-boot/docs/1.3.0.M5/api/org/springframework/boot/ansi/AnsiOutput.Enabled.html" target="_top">supported value</a> to override the auto detection.</p>
+      <p>如果你的控制台支持ANSI, 为了增强可读性，彩色文本输出会被启用. 你可以设置<code class="literal">spring.output.ansi.enabled</code> 为 <a class="link" href="http://docs.spring.io/spring-boot/docs/1.3.0.M5/api/org/springframework/boot/ansi/AnsiOutput.Enabled.html" target="_top">支持的值</a> 来覆盖自动侦测的值.</p>
      </div>
      <div class="section">
       <div class="titlepage">
@@ -5272,8 +5273,8 @@ dependencies {
         </div>
        </div>
       </div>
-      <p>By default, Spring Boot will only log to the console and will not write log files. If you want to write log files in addition to the console output you need to set a <code class="literal">logging.file</code> or <code class="literal">logging.path</code> property (for example in your <code class="literal">application.properties</code>).</p>
-      <p>The following table shows how the <code class="literal">logging.*</code> properties can be used together:</p>
+      <p>默认情况下, Spring Boot会只输出到控制台，并不会记录到日志文件中.如果你还想输出到文件中你需要设置<code class="literal">logging.file</code> 或者 <code class="literal">logging.path</code>属性 (例如在你的<code class="literal">application.properties</code>文件下).</p>
+      <p>下表展示了<code class="literal">logging.*</code> 如何配合使用:</p>
       <div class="table">
        <a name="d0e4171" href="#d0e4171"></a>
        <p class="title"><b>Table&nbsp;26.1.&nbsp;Logging properties</b></p>
@@ -5296,26 +5297,26 @@ dependencies {
            <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left" valign="top"><p><span class="emphasis"><em>(none)</em></span></p></td>
            <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left" valign="top"><p><span class="emphasis"><em>(none)</em></span></p></td>
            <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left" valign="top">&nbsp;</td>
-           <td style="border-bottom: 0.5pt solid ; " align="left" valign="top"><p>Console only logging.</p></td>
+           <td style="border-bottom: 0.5pt solid ; " align="left" valign="top"><p>只在控制台记录日志.</p></td>
           </tr>
           <tr>
-           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left" valign="top"><p>Specific file</p></td>
+           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left" valign="top"><p>特别的文件</p></td>
            <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left" valign="top"><p><span class="emphasis"><em>(none)</em></span></p></td>
            <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left" valign="top"><p><code class="literal">my.log</code></p></td>
-           <td style="border-bottom: 0.5pt solid ; " align="left" valign="top"><p>Writes to the specified log file. Names can be an exact location or relative to the current directory.</p></td>
+           <td style="border-bottom: 0.5pt solid ; " align="left" valign="top"><p>在文件中输出，Names可以使一个绝度路径或者相对于当前目录的相对路径.</p></td>
           </tr>
           <tr>
            <td style="border-right: 0.5pt solid ; " align="left" valign="top"><p><span class="emphasis"><em>(none)</em></span></p></td>
-           <td style="border-right: 0.5pt solid ; " align="left" valign="top"><p>Specific directory</p></td>
+           <td style="border-right: 0.5pt solid ; " align="left" valign="top"><p>特别的目录</p></td>
            <td style="border-right: 0.5pt solid ; " align="left" valign="top"><p><code class="literal">/var/log</code></p></td>
-           <td style="" align="left" valign="top"><p>Writes <code class="literal">spring.log</code> to the specified directory. Names can be an exact location or relative to the current directory.</p></td>
+           <td style="" align="left" valign="top"><p>输出 <code class="literal">spring.log</code> 到特定目录. Names可以使一个绝度路径或者相对于当前目录的相对路径.</p></td>
           </tr>
          </tbody>
         </table>
        </div>
       </div>
       <br class="table-break" />
-      <p>Log files will rotate when they reach 10 Mb and as with console output, <code class="literal">ERROR</code>, <code class="literal">WARN</code> and <code class="literal">INFO</code> level messages are logged by default.</p>
+      <p>日志文件当到达10Mb的时候会自动滚动成新文件L, <code class="literal">ERROR</code>, <code class="literal">WARN</code> and <code class="literal">INFO</code> 级别日志会默认输出l.</p>
       <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
        <table border="0" summary="Note">
         <tbody>
@@ -5324,7 +5325,7 @@ dependencies {
           <th align="left">Note</th>
          </tr>
          <tr>
-          <td align="left" valign="top"><p>The logging system is initialized early in the application lifecycle and as such logging properties will not be found in property files loaded via <code class="literal">@PropertySource</code> annotations.</p></td>
+          <td align="left" valign="top"><p>日志系统会在应用生命周期的早期初始化,因此属性文件中的日志配置属性不会被<code class="literal">@PropertySource</code> 注解加载.</p></td>
          </tr>
         </tbody>
        </table>
@@ -5338,7 +5339,7 @@ dependencies {
         </div>
        </div>
       </div>
-      <p>All the supported logging systems can have the logger levels set in the Spring <code class="literal">Environment</code> (so for example in <code class="literal">application.properties</code>) using ‘logging.level.*=LEVEL’ where ‘LEVEL’ is one of TRACE, DEBUG, INFO, WARN, ERROR, FATAL, OFF. Example <code class="literal">application.properties</code>:</p>
+      <p>所有的日志系统都可以在 <code class="literal">Environment</code> (例如在<code class="literal">application.properties</code>中) 设置日志级别,使用‘logging.level.*=LEVEL’ , ‘LEVEL’可选项为： TRACE, DEBUG, INFO, WARN, ERROR, FATAL, OFF. 例如 <code class="literal">application.properties</code>:</p>
       <pre class="programlisting"><span xmlns:d="http://docbook.org/ns/docbook" class="hl-attribute">logging.level.org.springframework.web</span>=DEBUG
 <span xmlns:d="http://docbook.org/ns/docbook" class="hl-attribute">logging.level.org.hibernate</span>=ERROR</pre>
       <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
@@ -5363,7 +5364,7 @@ dependencies {
         </div>
        </div>
       </div>
-      <p>The various logging systems can be activated by including the appropriate libraries on the classpath, and further customized by providing a suitable configuration file in the root of the classpath, or in a location specified by the Spring <code class="literal">Environment</code> property <code class="literal">logging.config</code>.</p>
+      <p>可以将不同的日志类库加入的classpath中来引用引入对应的日志功能, 然后在classpath中设置有效的配置文件, 或者在 <code class="literal">Environment</code> 中属性 <code class="literal">logging.config</code>配置的文件位置 .</p>
       <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
        <table border="0" summary="Note">
         <tbody>
@@ -5372,12 +5373,12 @@ dependencies {
           <th align="left">Note</th>
          </tr>
          <tr>
-          <td align="left" valign="top"><p>Since logging is initialized <span class="strong"><strong>before</strong></span> the <code class="literal">ApplicationContext</code> is created, it isn’t possible to control logging from <code class="literal">@PropertySources</code> in Spring <code class="literal">@Configuration</code> files. System properties and the conventional Spring Boot external configuration files work just fine.)</p></td>
+          <td align="left" valign="top"><p>因为日志系统是在<code class="literal">ApplicationContext</code> 创建 <span class="strong"><strong>之前</strong></span> 初始化的, 在Spring的<code class="literal">@Configuration</code>中使用注解<code class="literal">@PropertySources</code>是行不通的.系统属性和好用的Spring Boot扩展配置文件依旧工作的很好.)</p></td>
          </tr>
         </tbody>
        </table>
       </div>
-      <p>Depending on your logging system, the following files will be loaded:</p>
+      <p>依赖于你的日志系统，以下的配置文件会被加载:</p>
       <div class="informaltable">
        <table style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
         <colgroup>
@@ -5418,7 +5419,7 @@ dependencies {
           <th align="left">Note</th>
          </tr>
          <tr>
-          <td align="left" valign="top"><p>When possible we recommend that you use the <code class="literal">-spring</code> variants for your logging configuration (for example <code class="literal">logback-spring.xml</code> rather than <code class="literal">logback.xml</code>). If you use standard configuration locations, Spring cannot completely control log initialization.</p></td>
+          <td align="left" valign="top"><p>如果可能的话，我们强烈建议使用 <code class="literal">-spring</code> 后缀的日志配置(比如<code class="literal">logback-spring.xml</code> 而不是<code class="literal">logback.xml</code>). 如果你使用标准的配置路径，Spring无法完全控制日志系统.</p></td>
          </tr>
         </tbody>
        </table>
@@ -5431,12 +5432,12 @@ dependencies {
           <th align="left">Warning</th>
          </tr>
          <tr>
-          <td align="left" valign="top"><p>There are known classloading issues with Java Util Logging that cause problems when running from an ‘executable jar’. We recommend that you avoid it if at all possible.</p></td>
+          <td align="left" valign="top"><p>当以可执行jar包方式启动时，Java Util Loggin有类加载问题，建议你不要使用.</p></td>
          </tr>
         </tbody>
        </table>
       </div>
-      <p>To help with the customization some other properties are transferred from the Spring <code class="literal">Environment</code> to System properties:</p>
+      <p>为了方便用户自定义日志系统，Spring Boot将一些<code class="literal">Environment</code>级别的属性提升到系统属性:</p>
       <div class="informaltable">
        <table style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
         <colgroup>
@@ -5475,7 +5476,7 @@ dependencies {
         </tbody>
        </table>
       </div>
-      <p>All the logging systems supported can consult System properties when parsing their configuration files. See the default configurations in <code class="literal">spring-boot.jar</code> for examples.</p>
+      <p>所有支持的日志系统都会提供从配置文件到系统属性的便利. 参见<code class="literal">spring-boot.jar</code>中的默认配置.</p>
      </div>
      <div class="section">
       <div class="titlepage">
@@ -5485,7 +5486,7 @@ dependencies {
         </div>
        </div>
       </div>
-      <p>Spring Boot includes a number of extensions to Logback which can help with advanced configuration. You can use these extensions in your <code class="literal">logback-spring.xml</code> configuration file.</p>
+      <p>Spring Boot 包含了一些列Logback的扩展来提供高级配置. 你可以在<code class="literal">logback-spring.xml</code>中使用这些扩展的配置.</p>
       <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
        <table border="0" summary="Note">
         <tbody>
@@ -5494,7 +5495,7 @@ dependencies {
           <th align="left">Note</th>
          </tr>
          <tr>
-          <td align="left" valign="top"><p>You cannot use extensions in the standard <code class="literal">logback.xml</code> configuration file since it’s loaded too early. You need to either use <code class="literal">logback-spring.xml</code> or define a <code class="literal">logging.config</code> property.</p></td>
+          <td align="left" valign="top"><p>你不能够在<code class="literal">logback.xml</code>中使用这些可扩展配置,因为它很早就被加载了. 你可以幺妹使用<code class="literal">logback-spring.xml</code> 或者<code class="literal">logging.config</code> 配置文件.</p></td>
          </tr>
         </tbody>
        </table>
@@ -5507,7 +5508,7 @@ dependencies {
          </div>
         </div>
        </div>
-       <p>The <code class="literal">&lt;springProfile&gt;</code> tag allows you to optionally include or exclude sections of configuration based on the active Spring profiles. Profile sections are supported anywhere within the <code class="literal">&lt;configuration&gt;</code> element. Use the <code class="literal">name</code> attribute to specify which profile accepts the configuration. Multiple profiles can be specified using a comma-separated list.</p>
+       <p>The <code class="literal">&lt;springProfile&gt;</code>标签允许你可选择的激活的Spring profiles的配置部分. Profile 标签可以在 <code class="literal">&lt;configuration&gt;</code> 里面的任何位置都有效. 使用<code class="literal">name</code>属性来标识那个profile接收这个配置. 多个 profiles可以用逗号隔开.</p>
        <pre class="programlisting"><span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;springProfile</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-attribute">name</span>=<span xmlns:d="http://docbook.org/ns/docbook" class="hl-value">&quot;staging&quot;</span><span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&gt;</span>
     <span xmlns:d="http://docbook.org/ns/docbook" class="hl-comment">&lt;!-- configuration to be enabled when the &quot;staging&quot; profile is active --&gt;</span>
 <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/springProfile&gt;</span>
@@ -5528,7 +5529,7 @@ dependencies {
          </div>
         </div>
        </div>
-       <p>The <code class="literal">&lt;springProperty&gt;</code> tag allows you to surface properties from the Spring <code class="literal">Environment</code> for use within Logback. This can be useful if you want to access values from your <code class="literal">application.properties</code> file in your logback configuration. The tag works in a similar way to Logback’s standard <code class="literal">&lt;property&gt;</code> tag, but rather than specifying a direct <code class="literal">value</code> you specify the <code class="literal">source</code> of the property (from the <code class="literal">Environment</code>). You can use the <code class="literal">scope</code> attribute if you need to store the property somewhere other than in <code class="literal">local</code> scope.</p>
+       <p><code class="literal">&lt;springProperty&gt;</code>标签允许你在Logback的配置文件中使用Spring <code class="literal">Environment</code> 的配置. 如果你想在 <code class="literal">application.properties</code> 配置文件中获取属性值，这招会很有效. 这个标签与Logback的标准<code class="literal">&lt;property&gt;</code> 标签几乎没有差别, 但你不需要直接在源文件中编辑属性(从<code class="literal">Environment</code>). 你可以使用<code class="literal">scope</code> 属性，如果你想在除去<code class="literal">local</code> scope 之外的位置使用.</p>
        <pre class="programlisting"><span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;springProperty</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-attribute">scope</span>=<span xmlns:d="http://docbook.org/ns/docbook" class="hl-value">&quot;context&quot;</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-attribute">name</span>=<span xmlns:d="http://docbook.org/ns/docbook" class="hl-value">&quot;fluentHost&quot;</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-attribute">source</span>=<span xmlns:d="http://docbook.org/ns/docbook" class="hl-value">&quot;myapp.fulentd.host&quot;</span><span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">/&gt;</span>
 <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;appender</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-attribute">name</span>=<span xmlns:d="http://docbook.org/ns/docbook" class="hl-value">&quot;FLUENT&quot;</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-attribute">class</span>=<span xmlns:d="http://docbook.org/ns/docbook" class="hl-value">&quot;ch.qos.logback.more.appenders.DataFluentAppender&quot;</span><span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&gt;</span>
     <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;remoteHost&gt;</span>${fluentHost}<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/remoteHost&gt;</span>
@@ -5542,7 +5543,7 @@ dependencies {
            <th align="left">Tip</th>
           </tr>
           <tr>
-           <td align="left" valign="top"><p>The <code class="literal">RelaxedPropertyResolver</code> is used to access <code class="literal">Environment</code> properties. If specify the <code class="literal">source</code> in dashed notation (<code class="literal">my-property-name</code>) all the relaxed variations will be tried (<code class="literal">myPropertyName</code>, <code class="literal">MY_PROPERTY_NAME</code> etc).</p></td>
+           <td align="left" valign="top"><p><code class="literal">RelaxedPropertyResolver</code> is used to access <code class="literal">Environment</code> properties. If specify the <code class="literal">source</code> in dashed notation (<code class="literal">my-property-name</code>) all the relaxed variations will be tried (<code class="literal">myPropertyName</code>, <code class="literal">MY_PROPERTY_NAME</code> etc).</p></td>
           </tr>
          </tbody>
         </table>
@@ -5558,8 +5559,8 @@ dependencies {
        </div>
       </div>
      </div>
-     <p>Spring Boot is well suited for web application development. You can easily create a self-contained HTTP server using embedded Tomcat, Jetty, or Undertow. Most web applications will use the <code class="literal">spring-boot-starter-web</code> module to get up and running quickly.</p>
-     <p>If you haven’t yet developed a Spring Boot web application you can follow the &quot;Hello World!&quot; example in the <span class="emphasis"><em><a class="link" href="#getting-started-first-application" title="11.&nbsp;Developing your first Spring Boot application">Getting started</a></em></span> section.</p>
+     <p>Spring Boot 很好的适配web应用的发布. 你可以使用内嵌的Tomcat,Jetty或者Undertow轻松创建自启动的HTTP Server的应用. 多数web应用会使用<code class="literal">spring-boot-starter-web</code> 模块快速建立和启动.</p>
+     <p>如果你还没有开发过Spring Boot web应用，你可参阅<span class="emphasis"><em><a class="link" href="#getting-started-first-application" title="11.&nbsp;Developing your first Spring Boot application">Getting started</a></em></span> 章节的&quot;Hello World!&quot; 示例  .</p>
      <div class="section">
       <div class="titlepage">
        <div>
@@ -5568,8 +5569,8 @@ dependencies {
         </div>
        </div>
       </div>
-      <p>The Spring Web MVC framework (often referred to as simply ‘Spring MVC’) is a rich ‘model view controller’ web framework. Spring MVC lets you create special <code class="literal">@Controller</code> or <code class="literal">@RestController</code> beans to handle incoming HTTP requests. Methods in your controller are mapped to HTTP using <code class="literal">@RequestMapping</code> annotations.</p>
-      <p>Here is a typical example <code class="literal">@RestController</code> to serve JSON data:</p>
+      <p>Spring Web MVC框架 (简称‘Spring MVC’) 是富 ‘model view controller’ web 框架. Spring MVC 使用<code class="literal">@Controller</code> 或者 <code class="literal">@RestController</code> beans 出来HTTP请求. 使用<code class="literal">@RequestMapping</code>注解,controller里面的方法会被映射到HTTP路径  .</p>
+      <p>下面是一个提供JSON数据的<code class="literal">@RestController</code>:</p>
       <pre class="programlisting"><em><span class="hl-annotation" style="color: gray">@RestController</span></em>
 <em><span class="hl-annotation" style="color: gray">@RequestMapping(value=&quot;/users&quot;)</span></em>
 <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">class</span> MyRestController {
@@ -5590,7 +5591,7 @@ dependencies {
     }
 
 }</pre>
-      <p>Spring MVC is part of the core Spring Framework and detailed information is available in the <a class="link" href="http://docs.spring.io/spring/docs/4.2.1.RELEASE/spring-framework-reference/htmlsingle#mvc" target="_top">reference documentation</a>. There are also several guides available at <a class="link" href="http://spring.io/guides" target="_top">spring.io/guides</a> that cover Spring MVC.</p>
+      <p>Spring MVC 是 Spring Framework 的核心部分之一,详细信息可参阅<a class="link" href="http://docs.spring.io/spring/docs/4.2.1.RELEASE/spring-framework-reference/htmlsingle#mvc" target="_top">reference documentation</a>. 一些包含Spring MVC的用户指引可在<a class="link" href="http://spring.io/guides" target="_top">spring.io/guides</a> 查阅.</p>
       <div class="section">
        <div class="titlepage">
         <div>
